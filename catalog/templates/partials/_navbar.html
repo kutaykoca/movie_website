@@ -1,0 +1,80 @@
+{% load static %}
+<div class="container">
+<header class="">
+      <div class="navbar">
+
+        <a href="{% url 'index' %}" class="navbar-brand">
+          <img src="{% static './img/logoHRM.png' %}" style="height:75px;">
+        </a>
+
+        <!--
+          - navbar navigation
+        -->
+            <li> <a href="{% url 'index' %}" class="nav-link" style="font-size:20px;">Anasayfa</a> </li>
+            <li> <a href="{% url 'movies' %}" class="nav-link" style="font-size:20px;">Filmler</a> </li>
+        <!--
+          - search and sign-in
+        -->
+
+        <div class="navbar-actions">
+
+          <form action="#" class="navbar-form" method="GET">
+            <input type="text" name="search" placeholder="Aradığınız şey..." class="navbar-form-search">
+
+            <button class="navbar-form-btn">
+              <ion-icon name="search-outline"></ion-icon>
+            </button>
+            <button class="navbar-form-close">
+              <ion-icon name="close-circle-outline"></ion-icon>
+            </button>
+          </form>
+
+
+          <!--
+            - search button for small screen
+          -->
+
+          <button class="navbar-search-btn">
+          <ion-icon name="search-outline"></ion-icon>
+          </button>
+			
+			{% if user.is_authenticated %}
+                  <li class = "nav-item">
+                      <span style="left: 50px;" <strong>{{user.username}}</strong></span>
+                      <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">Çıkış</a>
+                      <form action="{% url 'logout' %}" method="POST" id="logout">
+                          {% csrf_token %}
+                          <input type="hidden">
+                      </form>
+                  </li>
+
+			{% else %}
+                  <li 
+              {% if 'login' in request.path %}
+                  class = "nav-item active"
+              {% else %}
+                  class = "nav-item"
+              {% endif %}
+                  >
+          <a href="{% url 'login' %}" class="nav-link">Giriş Yap</a>
+          </li>
+
+              <li 
+              {% if 'register' in request.path %}
+                  class = "nav-item active"
+              {% else %}
+                  class = "nav-item"
+              {% endif %}
+              >
+          <a href="{% url 'register' %}" class="nav-link">
+             <span>Kayıt Ol</span>
+             <ion-icon name="log-in-outline"></ion-icon>
+          </a>
+		      
+              </li>
+              
+              {% endif %}
+        </div>
+      </div>
+</header>
+</div>

@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<h1 class="h1 text-center" id="pageHeaderTitle">FİLMLER</h1>
+    <div class="row">
+        <div class="col-sm">
+
+            {% if movies %}
+                {% for movie in movies %}
+                    <div class="card mb-4" style="background-color:	#e6e6fa;">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img class="card-img" src="{% static movie.get_image_path %}" alt="">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <div class="card-title">
+                               <a style="text-transform: uppercase; color:black"  href="{% url 'detail' movie.id %}">{{ movie.name }}</a>
+                            </div>
+                            <p class="card-text" style="color: black;">
+                                {{ movie.description }}
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">{{ movie.created_date | timesince }}</small>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">{{ movie.category }}</small>
+                            </p>
+                            <a href="{% url 'detail' movie.id %}"><button type="button" class="btn btn-outline-dark">Devamı..</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-warning">
+                    <p>
+                        Film Yok
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div> 
+{% endblock %}
